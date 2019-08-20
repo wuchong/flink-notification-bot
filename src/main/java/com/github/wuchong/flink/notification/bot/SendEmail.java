@@ -58,6 +58,9 @@ public class SendEmail {
             );
             message.setSubject(email.getSubject());
             message.setText(email.getContent());
+            message.setHeader("Content-Type", "text/html; charset=utf-8");
+            message.setHeader("Content-Transfer-Encoding", "quoted-printable");
+
             LOG.info("Sending Email: '"+ email.getSubject() + "'");
             Transport.send(message);
             LOG.info("Send Email Successfully.");

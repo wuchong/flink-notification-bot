@@ -62,4 +62,12 @@ public class Email {
     public String getContent() {
         return content;
     }
+
+
+
+    // --------------------------------------------------------------------------------------------
+
+    public static String generateHTML(BuildResult build) {
+        return null;
+    }
 }

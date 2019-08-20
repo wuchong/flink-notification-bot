@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>#repo-username-link:visited{color:#333333}
+    #repo-username-link:hover{color:#333333}
+    #repo-username-link:active{color:#333333}
+    #branch-name-link:visited{color:#333333}
+    #branch-name-link:hover{color:#333333}
+    #branch-name-link:active{color:#333333}
+    .success:visited{color:#32D282}
+    .success:hover{color:#32D282}
+    .success:active{color:#32D282}
+    .failure:visited{color:#DB4545}
+    .failure:hover{color:#DB4545}
+    .failure:active{color:#DB4545}
+    .error:visited{color:#666766}
+    .error:hover{color:#666766}
+    .error:active{color:#666766}
+    #changeset-link:visited{color:#0068FF}
+    #changeset-link:hover{color:#0068FF}
+    #changeset-link:active{color:#0068FF}
+    #documentation-link:visited{color:#0068FF}
+    #documentation-link:hover{color:#0068FF}
+    #documentation-link:active{color:#0068FF}
+    #configuration-link:visited{color:#9EA3A8}
+    #configuration-link:hover{color:#9EA3A8}
+    #configuration-link:active{color:#9EA3A8}
+    #email-footer-section a:active{color:#9EA3A8}
+    #email-footer-section a:hover{color:#9EA3A8}
+    #email-footer-section a:visited{color:#9EA3A8}
+    </style>
+</head>
+<body style="min-width: 100%;height: 100%;margin: 0;padding: 0;">
+<table id="travis-ci-email-container" align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="height:100%;width:100%;padding:10px;font-family:'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;line-height:150%;text-align:center;color:#333333;background-color:#F4F5F9;background-image:url('https://s3.amazonaws.com/travis-email-assets/build_background.png');height: 100%;width: 100%;padding: 10px;font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;line-height: 150%;text-align: center;color: #333333;background-color: #F4F5F9;background-image: url(https://s3.amazonaws.com/travis-email-assets/build_background.png);">
+    <tr>
+        <td align="center" valign="top" style="padding-bottom: 20px;">
+            <table id="email-content-container" border="0" cellpadding="0" cellspacing="0" style="width:500px;padding:32px;background-color:#FFFFFF;width: 500px; padding: 32px; background-color: #FFFFFF;">
+                <!-- Repository Username Section -->
+                <tr>
+                    <td id="repo-username-section" align="center" valign="top" style="padding-bottom:20px;padding-bottom: 20px;">
+                        <a id="repo-username-link" style="color:#333333;text-decoration:none;border-bottom:1px solid #333333;padding-bottom:4px;color: #333333; border-bottom: 1px solid #333333; text-decoration: none; padding-bottom: 4px;" href="${repo_username_link}">
+                            <p class="repo-slug" style="margin:0px;font-size:30px;font-weight:600;line-height:36px;padding-left:5px;display: inline; font-size: 30px; font-weight: 600; line-height: 36px; padding-right: 5px; padding-left: 0px;">${account}</p>
+                            <p id="repo-slug-divider" style="margin:0px;font-size:30px;font-weight:100;color:#9EA3A8;display: inline; font-size: 30px; font-weight: 100; color: #9EA3A8;">/</p>
+                            <p class="repo-slug" style="margin:0px;font-size:30px;font-weight:600;line-height:36px;padding-left:5px;display: inline; font-size: 30px; font-weight: 600; line-height: 36px; padding-left: 5px;">${repository}</p></a>
+                    </td>
+                </tr>
+                <!-- Branch Name Section -->
+                <tr>
+                    <td id="branch-name-section" align="center" valign="top" style="padding-bottom: 35px;">
+                        <p id="branch-name" style="margin:0px;font-size:28px;font-weight:300;margin: 0px; font-size: 28px; font-weight: 300;">
+                            <img alt="branch icon" style="width:16px;height:auto;padding-right:8px;vertical-align:bottom;width: 16px; height: auto; padding-right: 8px; vertical-align: bottom;" src="https://s3.amazonaws.com/travis-email-assets/branch.png"><a id="branch-name-link" style="color:#333333;line-height:36px;text-decoration:none;border-bottom:1px solid #333333;text-decoration: none; border-bottom: 1px solid #333333; padding-bottom: 2px; line-height: 36px;" href="${branch_name_link}">${branch_name}</a>
+                        </p>
+                    </td>
+                </tr>
+                <!-- Build Status Section -->
+                <tr>
+                    <td align="center" valign="top" style="padding-bottom: 20px;">
+                        <table cellpadding="0" cellspacing="0" class="build-status-border build-status-border-failure" style="border-radius:3px;border:1px solid #DB4545;width: 100%;">
+                            <tr class="build-status-background-failure" style="background:rgba(219, 69, 69, 0.1)">
+                                <td id="status-icon-section" align="center" valign="top" class="build-status-border-bottom-failure" style="border-bottom:1px solid #DB4545;padding: 15px 15px;">
+                                    <div style="float: left;">
+                                        <div style="display: inline;"><img alt="build hasfailed" style="display: inline; vertical-align: sub; width: 17px; height: 17px; padding-right: 8px;" src="https://s3.amazonaws.com/travis-email-assets/status-failed.png"></div><div style="display: inline;"><a id="status-section-message" class="failure" style="color:#DB4545;font-size: 16px; font-weight: 600;" href="${build_url}">Build #${build_number} ${build_status}</a></div>
+                                    </div>
+                                    <div style="display: inline; float: left;"><img id="arrow" alt="arrow to build time" style="width: 7px; height: auto; vertical-align: text-bottom; padding: 0px 8px;" src="https://s3.amazonaws.com/travis-email-assets/failure-arrow.png"></div>
+                                    <div style="float: right;">
+                                        <span><img id="build-time-clock-icon" alt="clock icon" style="width: 15px; height: 17px; padding-right: 8px; vertical-align: sub" src="https://s3.amazonaws.com/travis-email-assets/time.png"></span><span style="font-size: 14px;">${duration}</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td id="user-avatar-changeset-section" align="center" valign="top" style="padding-bottom:32px;padding: 20px 15px 35px 15px;">
+                                    <div id="user-avatar-changeset-left" style="float:left;float: left;">
+                                        <p style="margin:0px;display: inline; font-size: 14px; font-weight: 700; color: #333333;">
+                                            <img alt="${author} avatar" style="width: 22px;height: auto; border-radius: 10px; vertical-align: middle; margin-right: 8px;" src="${gravatar_url}">${author}
+                                        </p>
+                                    </div>
+                                    <div id="user-avatar-changeset-right" style="float:right;float: right;">
+                                        <a id="changeset-link" style="font-size:14px;font-weight:600;color:#0068FF;font-size: 14px; color: #0068FF; font-weight: 600;" href="${changeset}">${short_commit} CHANGESET →</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td id="commit-message-section" align="center" valign="top" style="min-height:104px;padding:0px 20px 20px 20px;min-height:104px; padding: 0px 15px 20px 15px;">
+                                    <p id="commit-message" style="margin:0px;font-family:cousine, monospace;font-size:14px;line-height:22px;font-family: cousine, monospace; font-size: 14px; text-align: left; line-height: 22px;">${commit_message}</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

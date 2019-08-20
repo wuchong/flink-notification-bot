@@ -1,0 +1,15 @@
+${repo_username_link}
+${account}
+${repository}
+${branch_name_link}
+${branch_name}
+${build_url}
+${build_number}
+${build_status}
+${duration}
+${author}
+${gravatar_url}
+${author}
+${changeset}
+${short_commit}
+${commit_message}

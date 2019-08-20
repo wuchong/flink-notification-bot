@@ -37,11 +37,13 @@ public class TravisPostHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange he) throws IOException {
         // parse request
-        Map<String, Object> parameters = (Map<String, Object>) he.getAttribute("parameters");
-        LOG.info("Travis post parameters: " + parameters);
         InputStreamReader isr = new InputStreamReader(he.getRequestBody(), StandardCharsets.UTF_8);
         BufferedReader br = new BufferedReader(isr);
-        String line = br.readLine();
-        LOG.info("Travis request body: " + line);
+        String paylaod = br.readLine();
+        try {
+            Map<String, String> builds = BuildResult.parse(paylaod);
+        } catch (Exception e) {
+            LOG.warn("Corrupt payload: " + paylaod, e);
+        }
     }
 }
