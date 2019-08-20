@@ -1,5 +1,6 @@
 package com.github.wuchong.flink.notification.bot;
 
+import com.github.wuchong.flink.notification.bot.util.DurationFormatter;
 import org.joda.time.Period;
 import org.junit.Test;
 

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.github.wuchong.flink.notification.bot;
+package com.github.wuchong.flink.notification.bot.email;
 
 /**
  * Email Entity.
@@ -63,11 +63,4 @@ public class Email {
         return content;
     }
 
-
-
-    // --------------------------------------------------------------------------------------------
-
-    public static String generateHTML(BuildResult build) {
-        return null;
-    }
 }

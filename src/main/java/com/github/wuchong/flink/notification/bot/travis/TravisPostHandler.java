@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.github.wuchong.flink.notification.bot;
+package com.github.wuchong.flink.notification.bot.travis;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;

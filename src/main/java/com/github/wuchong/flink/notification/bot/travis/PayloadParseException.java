@@ -16,25 +16,15 @@
  * limitations under the License.
  */
 
-package com.github.wuchong.flink.notification.bot;
+package com.github.wuchong.flink.notification.bot.travis;
 
-import com.github.wuchong.flink.notification.bot.travis.TravisPostHandler;
-import com.sun.net.httpserver.HttpServer;
+public class PayloadParseException extends Exception {
 
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.util.Arrays;
-import java.util.concurrent.Executors;
+    public PayloadParseException(String message) {
+        super(message);
+    }
 
-public class FlinkHttpServer {
-
-    public static void main(String[] args) throws IOException {
-        System.out.println(Arrays.toString(args));
-        int port = 9000;
-        HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
-        System.out.println("server started at " + port);
-        server.createContext("/travis", new TravisPostHandler());
-        server.setExecutor(Executors.newFixedThreadPool(4));
-        server.start();
+    public PayloadParseException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

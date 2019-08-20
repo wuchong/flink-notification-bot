@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.github.wuchong.flink.notification.bot;
+package com.github.wuchong.flink.notification.bot.email;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,17 +30,32 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
-public class SendEmail {
+public class EmailSender {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SendEmail.class);
+    private static final Logger LOG = LoggerFactory.getLogger(EmailSender.class);
 
     public static void send(Email email) {
+        String from = email.getFrom();
         Properties prop = new Properties();
-        prop.put("mail.smtp.host", "smtp.gmail.com");
-        prop.put("mail.smtp.port", "465");
-        prop.put("mail.smtp.auth", "true");
-        prop.put("mail.smtp.socketFactory.port", "465");
-        prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        if (from.endsWith("hotmail.com") || from.endsWith("outlook.com")) {
+            prop.put("mail.smtp.host", "smtp.office365.com");
+            prop.put("mail.smtp.port", "587");
+            prop.put("mail.smtp.starttls.enable","true");
+            prop.put("mail.smtp.auth", "true");
+        } else if (from.endsWith("gmail.com")) {
+            prop.put("mail.smtp.host", "smtp.gmail.com");
+            prop.put("mail.smtp.port", "465");
+            prop.put("mail.smtp.auth", "true");
+            prop.put("mail.smtp.socketFactory.port", "465");
+            prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        } else if (from.endsWith("163.com")) {
+            prop.put("mail.smtp.host", "smtp.163.com");
+            prop.put("mail.smtp.port", "465");
+            prop.put("mail.smtp.starttls.enable","true");
+            prop.put("mail.smtp.auth", "true");
+            prop.put("mail.smtp.socketFactory.port", "465");
+            prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        }
 
         Session session = Session.getInstance(prop,
                 new javax.mail.Authenticator() {
@@ -61,11 +76,11 @@ public class SendEmail {
             message.setHeader("Content-Type", "text/html; charset=utf-8");
             message.setHeader("Content-Transfer-Encoding", "quoted-printable");
 
-            LOG.info("Sending Email: '"+ email.getSubject() + "'");
+            LOG.trace("Sending Email: '"+ email.getSubject() + "'");
             Transport.send(message);
-            LOG.info("Send Email Successfully.");
+            LOG.info("Send Email Successfully: '"+ email.getSubject() + "'");
         } catch (MessagingException e) {
-            LOG.error("Send Email Failed.", e);
+            LOG.error("Send Email failed: '" + email.getSubject() + "'" , e);
         }
     }
 }

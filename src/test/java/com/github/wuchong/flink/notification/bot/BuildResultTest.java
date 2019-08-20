@@ -18,41 +18,37 @@
 
 package com.github.wuchong.flink.notification.bot;
 
-import com.google.common.collect.Maps;
-import com.google.common.io.Files;
+import com.github.wuchong.flink.notification.bot.travis.BuildResult;
 import org.junit.Test;
 
-import java.io.File;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
+import static com.github.wuchong.flink.notification.bot.util.ResourceUtils.readResourceFile;
 import static org.junit.Assert.assertEquals;
 
 public class BuildResultTest {
 
     @Test
     public void testPayloadParse() throws Exception {
-        File file = new File(getClass().getResource("/failed.payload").getFile());
-        List<String> line = Files.readLines(file, StandardCharsets.UTF_8);
-        Map<String, String> result = BuildResult.parse(line.get(0));
-        String expected = "{" +
-                "short_commit=d5e3853, " +
-                "author=Jark Wu, " +
-                "commit_message=remove license to fail fast, " +
-                "repository=flink, " +
-                "changeset=https://github.com/apache/flink/compare/9955bb0afda2%5E...d5e3853681bf, " +
-                "duration=1 min, 36 secs, " +
-                "repo_username_link=https://travis-ci.org/apache/flink, " +
-                "branch_name_link=https://github.com/apache/flink/tree/builds, " +
-                "branch_name=builds, " +
-                "build_number=40122, " +
-                "gravatar_url=https://secure.gravatar.com/avatar/77efb4eed4c1292d514ac18a6e31b19c.jpg, " +
-                "build_status=failed, " +
-                "build_url=https://travis-ci.org/apache/flink/builds/574145594, " +
-                "account=apache}";
-
-        assertEquals(expected, result.toString());
+        Map<String, String> result = BuildResult.parse(readResourceFile("failed.payload"));
+        Map<String, String> expected = new HashMap<>();
+        expected.put("build_status_capital", "Failed");
+        expected.put("short_commit", "d5e3853");
+        expected.put("author", "Jark Wu");
+        expected.put("commit_message", "remove license to fail fast");
+        expected.put("repository", "flink");
+        expected.put("changeset", "https://github.com/apache/flink/compare/9955bb0afda2%5E...d5e3853681bf");
+        expected.put("duration", "1 min, 36 secs");
+        expected.put("repo_username_link", "https://travis-ci.org/apache/flink");
+        expected.put("branch_name_link", "https://github.com/apache/flink/tree/builds");
+        expected.put("branch_name", "builds");
+        expected.put("build_number", "40122");
+        expected.put("gravatar_url", "https://secure.gravatar.com/avatar/77efb4eed4c1292d514ac18a6e31b19c.jpg");
+        expected.put("build_status", "failed");
+        expected.put("build_url", "https://travis-ci.org/apache/flink/builds/574145594");
+        expected.put("account", "apache");
+        assertEquals(expected, result);
     }
 
 }

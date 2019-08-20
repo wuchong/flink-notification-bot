@@ -16,15 +16,26 @@
  * limitations under the License.
  */
 
-package com.github.wuchong.flink.notification.bot;
+package com.github.wuchong.flink.notification.bot.util;
 
-public class PayloadParseException extends Exception {
+import com.google.common.io.Files;
 
-    public PayloadParseException(String message) {
-        super(message);
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
+public class ResourceUtils {
+
+    public static String readResourceFile(String fileName) {
+        File file = new File(ResourceUtils.class.getResource("/" + fileName).getFile());
+        List<String> line = null;
+        try {
+            line = Files.readLines(file, StandardCharsets.UTF_8);
+            return String.join("\n", line);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public PayloadParseException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

@@ -16,9 +16,10 @@
  * limitations under the License.
  */
 
-package com.github.wuchong.flink.notification.bot;
+package com.github.wuchong.flink.notification.bot.travis;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.wuchong.flink.notification.bot.util.DurationFormatter;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import de.bripkens.gravatar.DefaultImage;
@@ -37,86 +38,7 @@ public class BuildResult {
             .expireAfterWrite(Duration.ofDays(30))
             .build();
 
-    // payload['status_message'] or payload['result_message']
-    private final String result;
-    // payload['number']
-    private final String buildNumber;
-    // payload['repository']['owner_name']
-    private final String account;
-    // payload['repository']['name']
-    private final String repository;
-    // payload['branch']
-    private final String branch;
-    // substr(payload['commit'], 0, 7)
-    private final String shortCommit;
-    // payload['commit']
-    private final String commit;
-    // payload['message']
-    private final String commitMessage;
-    private final String authorName;
-    private final long duration; // seconds
-    private final String buildUrl;
-    private final String compareUrl;
-    private final String gravatarUrl;
-
-
-    public BuildResult(String result, String buildNumber, String account, String repository, String branch, String commit, String commitMessage, String authorName, long duration, String buildUrl, String compareUrl, String gravatarUrl) {
-        this.result = result;
-        this.buildNumber = buildNumber;
-        this.account = account;
-        this.repository = repository;
-        this.branch = branch;
-        this.commit = commit;
-        this.shortCommit = commit.substring(0, 7);
-        this.commitMessage = commitMessage;
-        this.authorName = authorName;
-        this.duration = duration;
-        this.buildUrl = buildUrl;
-        this.compareUrl = compareUrl;
-        this.gravatarUrl = gravatarUrl;
-    }
-
-    public String getRepoURL() {
-        return "https://github.com/" + account + "/" + repository;
-    }
-
-    public String getRepoBranchURL() {
-        return getRepoURL() + "/tree/" + branch;
-    }
-
-    public String getCommitURL() {
-        return getRepoURL() + "/commit/" + commit;
-    }
-
-    public String getPrettyDuration() {
-        return DurationFormatter.format(duration);
-    }
-
-    @Override
-    public String toString() {
-        return "BuildResult{" +
-                "result='" + result + '\'' +
-                ", buildNumber='" + buildNumber + '\'' +
-                ", account='" + account + '\'' +
-                ", repository='" + repository + '\'' +
-                ", branch='" + branch + '\'' +
-                ", shortCommit='" + shortCommit + '\'' +
-                ", commit='" + commit + '\'' +
-                ", commitMessage='" + commitMessage + '\'' +
-                ", authorName='" + authorName + '\'' +
-                ", duration=" + duration +
-                ", buildUrl='" + buildUrl + '\'' +
-                ", compareUrl='" + compareUrl + '\'' +
-                ", gravatarUrl='" + gravatarUrl + '\'' +
-                ", repoUrl='" + getRepoURL() + '\'' +
-                ", repoBranchUrl='" + getRepoBranchURL() + '\'' +
-                ", commitUrl='" + getCommitURL() + '\'' +
-                ", prettyDuration='" + getPrettyDuration() + '\'' +
-                '}';
-    }
-
     private static final String PAYLOAD_PREFIX = "payload=";
-
 
     @SuppressWarnings("unchecked")
     public static Map<String, String> parse(String payload) throws Exception {
@@ -182,6 +104,7 @@ public class BuildResult {
         builds.put("build_url", buildUrl);
         builds.put("build_number", buildNumber);
         builds.put("build_status", result.toLowerCase());
+        builds.put("build_status_capital", result);
         builds.put("duration", DurationFormatter.format(duration));
         builds.put("author", authorName);
         builds.put("gravatar_url", gravatarUrl);
@@ -189,7 +112,7 @@ public class BuildResult {
         builds.put("short_commit", commit.substring(0, 7));
         builds.put("commit_message", commitMessage);
         return builds;
-
     }
+
 
 }

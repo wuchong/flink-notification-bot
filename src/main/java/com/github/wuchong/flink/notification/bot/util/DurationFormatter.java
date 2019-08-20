@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.github.wuchong.flink.notification.bot;
+package com.github.wuchong.flink.notification.bot.util;
 
 import org.joda.time.Duration;
 import org.joda.time.format.PeriodFormatter;
@@ -41,9 +41,4 @@ public class DurationFormatter {
                 .toFormatter();
         return formatter.print(duration.toPeriod());
     }
-
-    public static void main(String[] args) {
-        System.out.println(format(96));
-    }
-
 }
