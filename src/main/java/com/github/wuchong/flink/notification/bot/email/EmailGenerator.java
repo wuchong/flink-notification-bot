@@ -100,10 +100,15 @@ public class EmailGenerator {
         String number = data.get("build_number");
         String branch = data.get("branch_name");
         String commit = data.get("short_commit");
-        return status + ": " +
+        String title = status + ": " +
                 apache + "/" + flink +
                 "#" + number +
                 " (" + branch + " - " + commit + ")";
+        if ("cron".equalsIgnoreCase(data.get("type"))) {
+            return "[CRON]" + title;
+        } else {
+            return title;
+        }
     }
 
     public static String generateHTML(Map<String, String> data) {

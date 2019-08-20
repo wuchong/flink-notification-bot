@@ -69,6 +69,7 @@ public class BuildResult {
         String commitMessage = (String) map.get("message");
         String authorName = (String) map.get("author_name");
         String authorEmail = (String) map.get("author_email");
+        String type = (String) map.get("type");
         int duration = (Integer) map.get("duration");
         String buildUrl = (String) map.get("build_url");
         String compareUrl = (String) map.get("compare_url");
@@ -111,6 +112,7 @@ public class BuildResult {
         builds.put("changeset", compareUrl);
         builds.put("short_commit", commit.substring(0, 7));
         builds.put("commit_message", commitMessage);
+        builds.put("type", type);
         return builds;
     }
 

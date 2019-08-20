@@ -22,7 +22,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -55,6 +54,12 @@ public class EmailSender {
             prop.put("mail.smtp.auth", "true");
             prop.put("mail.smtp.socketFactory.port", "465");
             prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        } else if (from.endsWith("mailgun.org") || from.endsWith("wuchong.me")) {
+            prop.put("mail.smtp.host", "smtp.mailgun.org");
+            prop.put("mail.smtp.port", "587");
+            prop.put("mail.smtp.auth", "true");
+            prop.put("mail.smtp.socketFactory.port", "465");
+            prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         }
 
         Session session = Session.getInstance(prop,
@@ -66,7 +71,7 @@ public class EmailSender {
 
         try {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(email.getFrom()));
+            message.setFrom(new InternetAddress(email.getFrom(), "Flink CI"));
             message.setRecipients(
                     Message.RecipientType.TO,
                     InternetAddress.parse(email.getTo())
@@ -79,7 +84,7 @@ public class EmailSender {
             LOG.trace("Sending Email: '"+ email.getSubject() + "'");
             Transport.send(message);
             LOG.info("Send Email Successfully: '"+ email.getSubject() + "'");
-        } catch (MessagingException e) {
+        } catch (Exception e) {
             LOG.error("Send Email failed: '" + email.getSubject() + "'" , e);
         }
     }

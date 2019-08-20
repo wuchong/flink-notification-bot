@@ -48,6 +48,7 @@ public class BuildResultTest {
         expected.put("build_status", "failed");
         expected.put("build_url", "https://travis-ci.org/apache/flink/builds/574145594");
         expected.put("account", "apache");
+        expected.put("type", "push");
         assertEquals(expected, result);
     }
 
