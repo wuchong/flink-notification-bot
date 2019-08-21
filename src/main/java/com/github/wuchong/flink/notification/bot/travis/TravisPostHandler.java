@@ -41,7 +41,8 @@ public class TravisPostHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         Headers headers = exchange.getRequestHeaders();
-        LOG.info("headers: " + headers);
+        LOG.info("SIGNATURE headers: " + headers.get("SIGNATURE"));
+        LOG.info("HTTP_SIGNATURE headers: " + headers.get("HTTP_SIGNATURE"));
 //        String signature = headers.getFirst("SIGNATURE");
 //        byte[] byteSignature = Base64.getDecoder().decode(signature);
         // parse request
