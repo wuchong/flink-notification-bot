@@ -28,7 +28,7 @@ import java.util.List;
 public class ResourceUtils {
 
     public static String readResourceFile(String fileName) {
-        File file = new File(ResourceUtils.class.getResource("/" + fileName).getFile());
+        File file = new File(ResourceUtils.class.getClassLoader().getResource(fileName).getFile());
         List<String> line = null;
         try {
             line = Files.readLines(file, StandardCharsets.UTF_8);
