@@ -21,7 +21,6 @@ package com.github.wuchong.flink.notification.bot.travis;
 import com.github.wuchong.flink.notification.bot.email.Email;
 import com.github.wuchong.flink.notification.bot.email.EmailGenerator;
 import com.github.wuchong.flink.notification.bot.email.EmailSender;
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.slf4j.Logger;
@@ -40,11 +39,6 @@ public class TravisPostHandler implements HttpHandler {
     @SuppressWarnings("unchecked")
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        Headers headers = exchange.getRequestHeaders();
-        LOG.info("SIGNATURE headers: " + headers.get("SIGNATURE"));
-        LOG.info("HTTP_SIGNATURE headers: " + headers.get("HTTP_SIGNATURE"));
-//        String signature = headers.getFirst("SIGNATURE");
-//        byte[] byteSignature = Base64.getDecoder().decode(signature);
         // parse request
         InputStreamReader isr = new InputStreamReader(exchange.getRequestBody(), StandardCharsets.UTF_8);
         BufferedReader br = new BufferedReader(isr);
