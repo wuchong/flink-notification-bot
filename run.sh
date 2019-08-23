@@ -1,2 +1,3 @@
 #!/bin/bash
-mvn exec:java -Dlog.file=${PWD}/bot.log
+
+java -jar target/flink-notification-bot.jar -cp config.properties

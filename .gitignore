@@ -2,5 +2,6 @@
 target
 bot.log
 src/main/resources/config.properties
-src/main/resources/log4j.properties
+config.properties
 *.iml
+dependency-reduced-pom.xml
