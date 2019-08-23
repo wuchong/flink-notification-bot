@@ -21,6 +21,7 @@ package com.github.wuchong.flink.notification.bot;
 import com.github.wuchong.flink.notification.bot.email.EmailConfig;
 import com.github.wuchong.flink.notification.bot.email.EmailSender;
 import com.github.wuchong.flink.notification.bot.travis.TravisPostHandler;
+import com.github.wuchong.flink.notification.bot.util.ResourceUtils;
 import com.sun.net.httpserver.HttpServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +37,8 @@ public class FlinkHttpServer {
 
     public static void main(String[] args) throws IOException {
         LOG.info("Email setting: from={}, to={}", EmailConfig.INSTANCE.getUsername(), EmailConfig.INSTANCE.getTo());
+        String html = ResourceUtils.readResourceFile("template.html");
+        System.out.println(html);
         System.out.println(Arrays.toString(args));
         int port = 9000;
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
