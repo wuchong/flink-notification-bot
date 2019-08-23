@@ -54,6 +54,13 @@ public class EmailSender {
             prop.put("mail.smtp.auth", "true");
             prop.put("mail.smtp.socketFactory.port", "465");
             prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        } else if (from.endsWith("qq.com") || from.endsWith("foxmail.com")) {
+            prop.put("mail.smtp.host", "smtp.qq.com");
+            prop.put("mail.smtp.port", "465");
+            prop.put("mail.smtp.starttls.enable","true");
+            prop.put("mail.smtp.auth", "true");
+            prop.put("mail.smtp.socketFactory.port", "465");
+            prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         } else if (from.endsWith("mailgun.org") || from.endsWith("wuchong.me")) {
             prop.put("mail.smtp.host", "smtp.mailgun.org");
             prop.put("mail.smtp.port", "587");
@@ -81,9 +88,9 @@ public class EmailSender {
             message.setHeader("Content-Type", "text/html; charset=utf-8");
             message.setHeader("Content-Transfer-Encoding", "quoted-printable");
 
-            LOG.trace("Sending Email: '"+ email.getSubject() + "'");
+            LOG.trace("Sending Email to {} for '{}'", email.getTo(), email.getSubject());
             Transport.send(message);
-            LOG.info("Send Email Successfully: '"+ email.getSubject() + "'");
+            LOG.info("Send Email to {} successfully for '{}'", email.getTo(), email.getSubject());
         } catch (Exception e) {
             LOG.error("Send Email failed: '" + email.getSubject() + "'" , e);
         }

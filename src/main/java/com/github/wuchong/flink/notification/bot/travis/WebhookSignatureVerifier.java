@@ -34,6 +34,7 @@ import java.time.Duration;
 import java.util.Map;
 import java.util.Scanner;
 
+// TODO: verify the post request is comes from travis
 public class WebhookSignatureVerifier {
 
     private static final Cache<String, String> CACHE = CacheBuilder.newBuilder()
@@ -79,6 +80,8 @@ public class WebhookSignatureVerifier {
         }
     }
 
+    // a signature example:
+    // "o4RJxun2Fej/kfIQNA2rF1Tc8uUa+BflVEUAhL1uwn8oaAqUftu4MBttXpNFUzHcheEUyytRprJ0K43kFv9hqApv9/A6Hi0YDKMCFEadlJXlC8v8poN2srOiNsPF66V0jKlan1jgjzr/yvfDDMDqql24ZsijnV2ACEpXOxapTrJvBxUsinlr8wxNiBCJgksC/7FYxxLhrWIAX9w8r0Jr+ir5UjKygbbcCxZ7gxjTx20fPoM7QkxboG1dAzGfoPmg/gFkXAIm4W1H2l39wwMQp2wVJ0TiN7uq0RnV4Q5O7XfLPx47HQfh2DBK++IdbBRtxX07fmAHaZAljF+8apchaw=="
     public static boolean verifySignature(String data, byte[] signature) throws Exception {
         String keyString = getPublicKey();
         X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(keyString.getBytes(StandardCharsets.UTF_8));
