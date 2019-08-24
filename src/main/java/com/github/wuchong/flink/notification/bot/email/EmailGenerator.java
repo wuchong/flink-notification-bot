@@ -105,7 +105,7 @@ public class EmailGenerator {
                 "#" + number +
                 " (" + branch + " - " + commit + ")";
         if ("cron".equalsIgnoreCase(data.get("type"))) {
-            return "[CRON]" + title;
+            return "[CRON] " + title;
         } else {
             return title;
         }
