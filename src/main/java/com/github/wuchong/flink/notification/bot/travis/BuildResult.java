@@ -111,7 +111,7 @@ public class BuildResult {
         builds.put("gravatar_url", gravatarUrl);
         builds.put("changeset", compareUrl);
         builds.put("short_commit", commit.substring(0, 7));
-        builds.put("commit_message", commitMessage);
+        builds.put("commit_message", commitMessage.replaceAll("\n", "<br/>"));
         builds.put("type", type);
         return builds;
     }
