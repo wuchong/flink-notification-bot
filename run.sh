@@ -1,3 +1,3 @@
 #!/bin/bash
 
-java -jar target/flink-notification-bot.jar -cp config.properties
+java -jar target/flink-notification-bot.jar

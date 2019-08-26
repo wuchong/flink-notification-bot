@@ -1,18 +1,25 @@
-# WebhookSignatureVerifier
+# Flink Notification Bot
 
-A small Sinatra app to verify the webhook payload signature
+A notification bot to receive Travis webhook payload and send Email notifications to builds@flink.apache.org.
 
-## Description
+## How it Works?
 
-Travis CI's webhook notification delivers a POST request to the specified endpoint a JSON payload as described.
+1. Travis CI's [webhook notification](https://docs.travis-ci.com/user/notifications/#Webhook-notifications) delivers a POST request to the specified endpoint a JSON payload as described.
+2. Encrypt the webhook url in the `.travis.yml` e.g: `travis encrypt "http://<ip>:9000/travis" --add notifications.webhooks.urls`.
+ - Where `<ip>` is the VM ip address hosts the bot service. The `:9000/travis` is the port and path where the bot monitors.
+ - Encrypting the webhoot url should address the issue of forked repos sending notifications to the mailing list.
+3. The Bot receives the POST request, unparses the payload, generates it into an HTML email.
+4. Send the email to builds@flink.apache.org using the configured email address and password.
 
-In addition, the request comes with the custom HTTP header Signature for the payload data.
+## How to Deploys?
 
-This small Sinatra app shows how to verify the signature.
+- Prepare a VM which has a public ip address.
+- Clone/Download the project in the VM.
+- Add `config.properties` file under `flink-notification-bot/src/main/resources`, and fill in `email.from`, and `email.password` and `email.to`. Take `config.properties.example` as an example.
+- `mvn clean package -DskipTests` under the root of the project to build the project.
+- run `./run.sh &` in background.
+- Checks the `bot.log` to see whether the bot service is launched successfully.
 
-## Verifying the signature
+## Feature requests
 
-1. Pick up the payload data from the HTTP request's body.
-2. Obtain the Signature header value, and base64-decode it.
-3. Obtain the public key corresponding to the private key that signed the payload. This is available at the /config endpoint's config.notifications.webhook.public_key on the relevant API server. (e.g., https://api.travis-ci.org/config)
-4. Verify the signature using the public key and SHA1 digest.
+* [ ] Verifying the [request signature](https://docs.travis-ci.com/user/notifications/#verifying-webhook-requests).
