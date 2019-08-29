@@ -32,6 +32,10 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
+import static com.github.wuchong.flink.notification.bot.email.EmailGenerator.generateSubject;
+import static com.github.wuchong.flink.notification.bot.email.EmailGenerator.isApacheFlink;
+import static com.github.wuchong.flink.notification.bot.email.EmailGenerator.isCanceled;
+
 public class TravisPostHandler implements HttpHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(TravisPostHandler.class);
@@ -45,14 +49,11 @@ public class TravisPostHandler implements HttpHandler {
         String paylaod = br.readLine();
         try {
             Map<String, String> builds = BuildResult.parse(paylaod);
-            String account = builds.get("account");
-            String repository = builds.get("repository");
-            if ("apache".equals(account) && "flink".equals(repository)) {
+            if (isApacheFlink(builds) && !isCanceled(builds)) {
                 Email email = EmailGenerator.createEmail(builds);
                 EmailSender.send(email);
             } else {
-                LOG.info("Ignore builds notification from " + account + "/" + repository);
-                LOG.info("Builds data: " + builds.toString());
+                LOG.info("Ignore builds notification: {}", generateSubject(builds));
             }
         } catch (Exception e) {
             LOG.warn("Corrupt payload: " + paylaod, e);

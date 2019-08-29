@@ -93,6 +93,18 @@ public class EmailGenerator {
 
     // --------------------------------------------------------------------------------------------
 
+    public static boolean isCanceled(Map<String, String> data) {
+        String status = data.get("build_status");
+        return status.equalsIgnoreCase(CANCELED) || status.equalsIgnoreCase(PENDING);
+    }
+
+    public static boolean isApacheFlink(Map<String, String> data) {
+        String account = data.get("account");
+        String repository = data.get("repository");
+        return "apache".equals(account) && "flink".equals(repository);
+    }
+
+
     public static String generateSubject(Map<String, String> data) {
         String status = data.get("build_status_capital");
         String apache = data.get("account");
