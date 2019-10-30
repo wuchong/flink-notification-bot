@@ -104,6 +104,14 @@ public class EmailGenerator {
         return "apache".equals(account) && "flink".equals(repository);
     }
 
+    public static boolean isMasterOrReleaseBranch(Map<String, String> data) {
+        String branch = data.get("branch_name");
+        if (branch != null) {
+            return branch.equals("master") || branch.startsWith("release-");
+        } else {
+            return false;
+        }
+    }
 
     public static String generateSubject(Map<String, String> data) {
         String status = data.get("build_status_capital");

@@ -35,6 +35,7 @@ import java.util.Map;
 import static com.github.wuchong.flink.notification.bot.email.EmailGenerator.generateSubject;
 import static com.github.wuchong.flink.notification.bot.email.EmailGenerator.isApacheFlink;
 import static com.github.wuchong.flink.notification.bot.email.EmailGenerator.isCanceled;
+import static com.github.wuchong.flink.notification.bot.email.EmailGenerator.isMasterOrReleaseBranch;
 
 public class TravisPostHandler implements HttpHandler {
 
@@ -49,7 +50,7 @@ public class TravisPostHandler implements HttpHandler {
         String paylaod = br.readLine();
         try {
             Map<String, String> builds = BuildResult.parse(paylaod);
-            if (isApacheFlink(builds) && !isCanceled(builds)) {
+            if (isApacheFlink(builds) && isMasterOrReleaseBranch(builds) && !isCanceled(builds)) {
                 Email email = EmailGenerator.createEmail(builds);
                 EmailSender.send(email);
             } else {
