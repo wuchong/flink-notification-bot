@@ -20,7 +20,6 @@ package com.github.wuchong.flink.notification.bot.email;
 
 import com.github.wuchong.flink.notification.bot.util.ResourceUtils;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -96,6 +95,11 @@ public class EmailGenerator {
     public static boolean isCanceled(Map<String, String> data) {
         String status = data.get("build_status");
         return status.equalsIgnoreCase(CANCELED) || status.equalsIgnoreCase(PENDING);
+    }
+
+    public static boolean isPassed(Map<String, String> data) {
+        String status = data.get("build_status");
+        return status.equalsIgnoreCase(PASSED);
     }
 
     public static boolean isApacheFlink(Map<String, String> data) {
